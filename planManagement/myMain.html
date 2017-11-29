@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>年度计划总表审批</title>
+    <script src=""></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="../myMain.js"></script>
+    <script type="application/javascript" src="node_modules/oclazyload/bower_components/angular/angular.js"></script>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="menu.html">
+</head>
+<body ng-controller="myCtrl" style="width: 95%;margin:0 auto;">
+
+/*        */
+
+
+<div ng-class="{progress: true, 'progress-striped': vm.striped}">
+    <div ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}">
+        <div ng-if="vm.showLabel">{{vm.value}}%</div>
+    </div>
+</div>
+
+<h3>选项</h3>
+<label>进度：<input type="number" class="form-control" ng-model="vm.value"/></label>
+<button class="btn btn-primary" ng-click="vm.value=0">0%</button>
+<button class="btn btn-primary" ng-click="vm.value=20">20%</button>
+<button class="btn btn-primary" ng-click="vm.value=60">60%</button>
+<button class="btn btn-primary" ng-click="vm.value=100">100%</button>
+<hr/>
+<label>斑马纹<input type="checkbox"  ng-model="vm.striped"/></label>
+<label>文字<input type="checkbox" ng-model="vm.showLabel"/></label>
+<hr/>
+<label>风格：
+    <select ng-model="vm.style" class="form-control">
+        <option value="progress-bar-success">progress-bar-success</option>
+        <option value="progress-bar-info">progress-bar-info</option>
+        <option value="progress-bar-danger">progress-bar-danger</option>
+        <option value="progress-bar-warning">progress-bar-warning</option>
+    </select>
+</label>
+/*         */
+
+
+<div ng-include="'../planManagement/menu.html'"></div>
+<ol class="breadcrumb">
+    <li><a href="../planManagement/menu.html">首页</a></li>
+    <li><a href="#">计划管理</a></li>
+    <li class="active">年度计划总表审批</li>
+</ol>
+<div>
+    年度计划总表审批
+</div>
+<hr/>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">年度计划总表审批</div>
+    <div class="panel-body">
+        <div class="form-group">
+
+            <label class="col-sm-2 control-label"><strong>年份：<span class="text-danger">*</span></strong></label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="year" name="year" value="" placeholder="年份"
+                       data-date="2017" data-format="yyyy" data-start-view="year" data-min-view="year" required>
+            </div>
+            <br>
+            <br>
+            <br>
+
+            <div class="form-group">
+                <!--                                     <div class="col-sm-offset-9 col-sm-3 mt-20"> -->
+                <div class="text-right" style="margin-right: 35px;">
+                    <button type="submit" class="btn btn-primary" id="querySum">查&nbsp;&nbsp;&nbsp;询</button>
+                    <button class="btn btn-primary " data-toggle="modal" data-target="#myModal">汇总信息查询</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table">
+        <div class="row">
+
+            <!-- col -->
+            <div class="col-md-12">
+
+                <!-- tile -->
+                <section class="tile">
+
+
+                    <!-- tile body -->
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-striped" >
+                                <thead>
+                                <tr>
+                                    <th>项目名称</th>
+                                    <th>项目类型</th>
+                                    <th>发起部门</th>
+                                    <th>申请时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                </tbody>
+                            </table>
+
+                            <div class="dataTable-footer pageFoot">
+                            </div>
+                            <input type="hidden"  name="projectNoList" id="projectNoList" value="${projectNoList!'' }">
+
+
+                            <div class="form-group text-center mt-40">
+                                <div class="text-right" style="margin-right:15px;">
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <button type="button" class="btn btn-primary" id="saveYearSum">保&nbsp;&nbsp;&nbsp;存</button>
+                                    <button type="button" class="btn btn-primary" id="saveSend">保存并发送</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- /tile body -->
+
+                </section>
+                <!-- /tile -->
+
+            </div>
+            <!-- /col -->
+
+
+            <!-- 查询汇总信息 -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title custom-font">汇总信息查询</h3>
+                            <div class="text-right" style="margin-right: 20px">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" >返回</button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <select id="teamPro" name="teamPro" class="chosen-select form-control" style="width: 90%;" onChange="querySum();" required>
+                                    <option value="0000">部门汇总</option>
+                                    <option value="0001">设备汇总</option>
+                                    <option value="0002">项目汇总</option>
+                                    <option value="0003">维保费用汇总</option>
+                                </select>
+                            </div>
+                            <div class="table-responsive selectRoll">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>部门名称</th>
+                                        <th>项目名称</th>
+                                        <th>项目类型</th>
+                                        <th>预计金额</th>
+                                        <th>支付比</th>
+                                        <th>实际金额</th>
+                                        <th>设备名称</th>
+                                        <th>发起人</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="sumInfoTable">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /查询汇总信息 -->
+
+
+        </div>
+    </table>
+
+</div>
+</body>
+</html>
